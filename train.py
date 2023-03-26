@@ -3,7 +3,7 @@ import torchvision
 import torchmetrics
 import argparse
 
-import model_setup, data_setup, engine, utils
+import data_setup, engine, utils
 
 import torchinfo
 import random
