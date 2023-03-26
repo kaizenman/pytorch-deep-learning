@@ -1,6 +1,5 @@
 *.pyc
 data
-model
 results
 classes.json
 *.png
