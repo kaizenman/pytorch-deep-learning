@@ -8,11 +8,9 @@ import os
 from pathlib import Path
 
 def visualize_learning(train_losses, test_losses, train_accuracies, test_accuracies, model_name):
-  
-
   epochs = range(len(train_losses))
   
-  f = plt.figure(figsize=(9, 9))
+  f = plt.figure(figsize=(12, 9))
   plt.subplot(2, 2, 1)
 
   plt.plot(epochs, train_losses, label='Train Loss')
@@ -48,12 +46,8 @@ def save_model(model, dir, model_name):
   print(f'Saved.')
 
 def write_class_names(class_names):
-  # Create a dictionary of integer to string
   dictionary = {index: value for index, value in enumerate(class_names)}
-
-  # Convert the dictionary to JSON
   json_data = json.dumps(dictionary)
 
-  # Write the JSON data to a file
   with open('classes.json', "w") as file:
       file.write(json_data)

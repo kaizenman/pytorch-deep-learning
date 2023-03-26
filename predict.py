@@ -22,8 +22,8 @@ with open("classes.json", "r") as file:
     json_data = file.read()
 class_names = json.loads(json_data)
 
-
-loaded_model = torchvision.models.efficientnet_b0().to(device)
+weights = torchvision.models.EfficientNet_B0_Weights.DEFAULT
+loaded_model = torchvision.models.efficientnet_b0(weights).to(device)
 # freeze the model
 for param in loaded_model.parameters():
   param.requires_grad = False
@@ -36,21 +36,22 @@ loaded_model.classifier = torch.nn.Sequential(
 loaded_model.eval()
 loaded_model.load_state_dict(torch.load(model_path))
 
+transform = torchvision.transforms.Compose([
+  torchvision.transforms.Resize((228, 228)),
+  torchvision.transforms.ToTensor(),
+  torchvision.transforms.Normalize(
+    mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]
+  )
+])
+
 with torch.inference_mode():
   img = Image.open(image_path)
-
+  transformed_image = transform(img)
+  target_image_pred = loaded_model(transformed_image.unsqueeze(dim=0).to(device))
+  displayed_image = transformed_image.permute(1, 2, 0).to('cpu')
   f = plt.figure(figsize=(9,9))
-  plt.imshow(img)
-
-  convert_tensor = torchvision.transforms.ToTensor()
-  X = convert_tensor(img).to(device) 
-
-  y_pred = loaded_model(X.unsqueeze(dim=0))
-
-  print(torch.softmax(y_pred, dim=1))
-
-  logit = torch.softmax(y_pred, dim=1).argmax(dim=1)
-
+  plt.imshow(displayed_image)
+  logit = torch.softmax(target_image_pred, dim=1).argmax(dim=1)
   plt.title(label={class_names[str(logit.item())]})
   plt.axis(False)
   f.savefig('predicted.png')
