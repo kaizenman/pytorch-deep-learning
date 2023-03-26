@@ -63,6 +63,12 @@ optimizer = torch.optim.Adam(model.parameters(), lr=args.lr)
 loss_fn = torch.nn.CrossEntropyLoss().to(device)
 accuracy_fn = torchmetrics.Accuracy(task='multiclass', num_classes=len(class_names)).to(device)
 
+
+train_losses = []
+train_accuracies = []
+test_losses = []
+test_accuracies = []
+
 for epoch in range(args.num_epochs):
   train_loss, train_accuracy = engine.train_step(
     model, 
@@ -81,6 +87,12 @@ for epoch in range(args.num_epochs):
     device
   )
 
+  train_losses.append(train_loss.item())
+  train_accuracies.append(train_accuracy.item())
+  test_losses.append(test_loss.item())
+  test_accuracies.append(test_accuracy.item())
+
   print(f'epoch: {epoch} | train_loss: {train_loss:.4f} | train_accuracy: {train_accuracy:.4f} | test_loss: {test_loss:.4f} | test_accuracy: {test_accuracy:.4f}')
 
+utils.visualize_learning(train_losses, test_losses, train_accuracies, test_accuracies, args.model_name)
 utils.save_model(model, model_save_dir, args.model_name)
