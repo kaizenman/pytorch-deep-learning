@@ -15,8 +15,6 @@ torch.cuda.manual_seed(1)
 parser = argparse.ArgumentParser()
 parser.add_argument('--training_dir', type=str, required=True)
 parser.add_argument('--testing_dir', type=str, required=True)
-parser.add_argument('--batch_size', type=int, required=True)
-parser.add_argument('--hidden_layers', type=int, required=True)
 parser.add_argument('--lr', type=float, required=True)
 parser.add_argument('--num_epochs', type=int, required=True)
 parser.add_argument('--model_name', type=str, required=True)
@@ -45,7 +43,7 @@ train_dataloader, test_dataloader, class_names = data_setup.create_dataloaders(
   train_dir=args.training_dir,
   test_dir=args.testing_dir,
   transform=final_transform,
-  batch_size=args.batch_size
+  batch_size=32
 )
 
 model.classifier = torch.nn.Sequential(
