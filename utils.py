@@ -1,4 +1,6 @@
 import torch 
+import json
+
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -44,3 +46,14 @@ def save_model(model, dir, model_name):
   print(f'Saving model to {model_save_path}...')
   torch.save(obj=model.state_dict(), f=model_save_path)
   print(f'Saved.')
+
+def write_class_names(class_names):
+  # Create a dictionary of integer to string
+  dictionary = {index: value for index, value in enumerate(class_names)}
+
+  # Convert the dictionary to JSON
+  json_data = json.dumps(dictionary)
+
+  # Write the JSON data to a file
+  with open('classes.json', "w") as file:
+      file.write(json_data)

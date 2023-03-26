@@ -94,5 +94,6 @@ for epoch in range(args.num_epochs):
 
   print(f'epoch: {epoch} | train_loss: {train_loss:.4f} | train_accuracy: {train_accuracy:.4f} | test_loss: {test_loss:.4f} | test_accuracy: {test_accuracy:.4f}')
 
+utils.write_class_names(class_names)
 utils.visualize_learning(train_losses, test_losses, train_accuracies, test_accuracies, args.model_name)
 utils.save_model(model, model_save_dir, args.model_name)
