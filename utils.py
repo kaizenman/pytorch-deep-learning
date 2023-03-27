@@ -48,6 +48,7 @@ def save_model(model, dir, model_name):
 def write_class_names(class_names):
   dictionary = {index: value for index, value in enumerate(class_names)}
   json_data = json.dumps(dictionary)
-
-  with open('classes.json', "w") as file:
-      file.write(json_data)
+  file_path = Path('classes.json')
+  if not file_path.is_file():
+    with open('classes.json', "w") as file:
+        file.write(json_data)

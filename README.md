@@ -3,10 +3,16 @@ Pizza/Steak/Sushi classifier
 ## Prepare data
 ```python3 data_prepare.py```
 
-## Train
+## Run train experiments
 ```
-python3 train.py --training_dir 'data/pizza_steak_sushi/train' --testing_dir 'data/pizza_steak_sushi/test'  --lr 0.001 --num_epochs 100 --model_name 'gpu_model_v3.pth'
+python3 train.py
 ```
+
+## Tensorboard
+```
+Ctrl+Shift+P -> Launch Tensorboard
+```
+
 ## Predict
 Pizza:
 ```

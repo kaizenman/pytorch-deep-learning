@@ -3,3 +3,5 @@ data
 results
 classes.json
 *.png
+model
+runs
